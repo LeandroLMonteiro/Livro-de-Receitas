@@ -1,7 +1,9 @@
 // src/receitas/entities/receita.entity.ts
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
 import { FichaTecnicaItem } from './ficha-tecnica-item.entity';
+import { TabelaNutricional } from './tabela-nutricional.entity';
+import { Comentario } from './comentario.entity';
 
 @Entity('receitas')
 export class Receita {
@@ -30,5 +32,12 @@ export class Receita {
   @OneToMany(() => FichaTecnicaItem, (item) => item.receita)
   fichaTecnica: FichaTecnicaItem[];
 
-  // Outras colunas, como Tabela Nutricional (pode ser uma relação OneToOne)
+  // Relação 1:1 com Tabela Nutricional
+  @OneToOne(() => TabelaNutricional, (nutri) => nutri.receita)
+  tabelaNutricional: TabelaNutricional; // Adicionado
+
+  // Relação 1:N com Comentários
+  @OneToMany(() => Comentario, (comentario) => comentario.receita)
+  comentarios: Comentario[]; // Adicionado
+
 }
