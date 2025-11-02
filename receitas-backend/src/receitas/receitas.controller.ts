@@ -1,6 +1,6 @@
 // src/receitas/receitas.controller.ts
 
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { ReceitasService } from './receitas.service';
 import { CreateFichaTecnicaItemDto } from './dto/create-ficha-tecnica-item.dto';
 
@@ -21,4 +21,10 @@ export class ReceitasController {
     // Nota: É importante que o ingredienteId seja um ID válido
     return this.receitasService.create(createReceitaDto as any);
   }
+  // Endpoint para a visualização completa do livro
+  @Get('completo')
+  async findAllCompleto() {
+    return this.receitasService.findAllCompleto();
+  }
+  
 }

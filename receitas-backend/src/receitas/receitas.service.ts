@@ -98,5 +98,20 @@ export class ReceitasService {
     });
   }
   
-  // Métodos CRUD básicos (findOne, findAll, update, remove) viriam aqui...
+  /**
+ * Busca todas as receitas carregando suas relações para a visualização completa.
+ */
+  async findAllCompleto(): Promise<Receita[]> {
+      return this.receitasRepository.find({
+        relations: [
+          'fichaTecnica', // Carrega os itens da Ficha Técnica
+          'fichaTecnica.ingrediente', // Carrega os detalhes do ingrediente dentro de cada item
+          'tabelaNutricional',
+          'comentarios',
+        ],
+        order: {
+          titulo: 'ASC',
+        }
+      });
+  }
 }
